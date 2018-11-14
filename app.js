@@ -74,12 +74,12 @@ app.post("/receipts", (req, res) => {
 
 //SHOW ROUTE
 app.get("/receipts/:id", function(req, res) {
-    Blog.findById(req.params.id, function(err, foundBlog) {
+    Receipt.findById(req.params.id, function(err, foundReceipt) {
         if (err) {
-            res.redirect("/blogs");
+            // res.redirect("/receipts");
         }
         else {
-            res.render("show", {blog: foundBlog});
+            res.render("show", {receipt: foundReceipt});
         }
     })
 })
