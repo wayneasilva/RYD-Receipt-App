@@ -28,7 +28,7 @@ const receiptSchema = new mongoose.Schema({
     notes: String
 });
 
-const Receipt = mongoose.model("Receipt", receiptSchema);
+const Receipt = mongoose.model("receipt", receiptSchema);
 
 // Receipt.create({
 //     receiptNumber: 1,
@@ -41,13 +41,11 @@ const Receipt = mongoose.model("Receipt", receiptSchema);
 // })
 
 //ROOT ROUTE
-app.get("/", function(req, res){
-    res.send("Receipt App Home Route");
-})
+app.get("/", (req, res) => {res.send("Receipt App Home Route");})
 
 //INDEX ROUTE
-app.get("/receipts", function(req, res){
-    Receipt.find({}, function(err, receipts){
+app.get("/receipts", (req, res) => {
+    Receipt.find({}, (err, receipts) => {
         if (err){
             console.log("Failed to load Receipts");
         }
@@ -59,34 +57,32 @@ app.get("/receipts", function(req, res){
 })
 
 // //NEW ROUTE
-// app.get("/blogs/new", function(req, res){
-//     res.render("new");
-// })
+app.get("/receipts/new", (req, res) => {res.render("new");})
 
 // //CREATE ROUTE
-// app.post("/blogs", function(req, res) {
-//     req.body.blog.body = req.sanitize(req.body.blog.body);
-//     Blog.create(req.body.blog, function(err, newBlog) {
-//         if (err) {
-//             res.render("new");
-//         }
-//         else {
-//             res.redirect("/blogs");
-//         }
-//     })
-// })
+app.post("/receipts", (req, res) => {
+    // req.body.receipt.body = req.sanitize(req.receipt.blog.body);
+    Receipt.create(req.body.receipt, (err, newReceipt) => {
+        if (err) {
+            res.render("new");
+        }
+        else {
+            res.redirect("/receipts");
+        }
+    })
+})
 
-// //SHOW ROUTE
-// app.get("/blogs/:id", function(req, res) {
-//     Blog.findById(req.params.id, function(err, foundBlog) {
-//         if (err) {
-//             res.redirect("/blogs");
-//         }
-//         else {
-//             res.render("show", {blog: foundBlog});
-//         }
-//     })
-// })
+//SHOW ROUTE
+app.get("/receipts/:id", function(req, res) {
+    Blog.findById(req.params.id, function(err, foundBlog) {
+        if (err) {
+            res.redirect("/blogs");
+        }
+        else {
+            res.render("show", {blog: foundBlog});
+        }
+    })
+})
 
 // //EDIT ROUTE
 // app.get("/blogs/:id/edit", function(req, res) {

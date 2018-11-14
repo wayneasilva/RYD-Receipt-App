@@ -1,20 +1,31 @@
+<% include partials/header.ejs %>
 
-<% receipts.forEach((receipt) => { %>
-    <div>
-        <p><%= receipt.receiptNumber %></p>
-        <p><%= receipt.firstName %></p>
-        <p><%= receipt.lastName %></p>
-        <p><%= receipt.phone %></p>
-        <p><%= receipt.saleDate %></p>
-        <p><%= receipt.item1['name'] %><span> - $</span><span><%= receipt.item1['price'] %></span></p>
-        <p><%= receipt.item2['name'] %><span> - $</span><span><%= receipt.item2['price'] %></span></p>
-        <p><%= receipt.item3['name'] %><span> - $</span><span><%= receipt.item3['price'] %></span></p>
-        <p><%= receipt.item4['name'] %><span> - $</span><span><%= receipt.item4['price'] %></span></p>
-        <p><%= receipt.item5['name'] %><span> - $</span><span><%= receipt.item5['price'] %></span></p>
-        <p><%= receipt.item6['name'] %><span> - $</span><span><%= receipt.item6['price'] %></span></p>
-        <p><%= receipt.item7['name'] %><span> - $</span><span><%= receipt.item7['price'] %></span></p>
-        <p><%= receipt.item8['name'] %><span> - $</span><span><%= receipt.item8['price'] %></span></p>
-        <p><%= receipt.item9['name'] %><span> - $</span><span><%= receipt.item9['price'] %></span></p>
-        <p><%= receipt.item10['name'] %><span> - $</span><span><%= receipt.item10['price'] %></span></p>
+<div class="box">
+    <div class="container">
+        <h1 class="title">Ryding Dirty Receipts</h1>
+        <% receipts.forEach((receipt) => { %>
+            <div class="box">
+                <div class="container">
+                    <p><%= receipt.receiptNumber %></p>
+                    <p><%= receipt.firstName %></p>
+                    <p><%= receipt.lastName %></p>
+                    <p><%= receipt.phone %></p>
+                    <p><%= receipt.saleDate %></p>
+                    <p><%= receipt.item1['name'] %><span> - $</span><span><%= receipt.item1['price'] %></span></p>
+                    <p><%= receipt.item2['name'] %><span> - $</span><span><%= receipt.item2['price'] %></span></p>
+                    <p><%= receipt.item3['name'] %><span> - $</span><span><%= receipt.item3['price'] %></span></p>
+                    <p><%= receipt.item4['name'] %><span> - $</span><span><%= receipt.item4['price'] %></span></p>
+                    <p><%= receipt.item5['name'] %><span> - $</span><span><%= receipt.item5['price'] %></span></p>
+                    <p><%= receipt.item6['name'] %><span> - $</span><span><%= receipt.item6['price'] %></span></p>
+                    <p><%= receipt.item7['name'] %><span> - $</span><span><%= receipt.item7['price'] %></span></p>
+                    <p><%= receipt.item8['name'] %><span> - $</span><span><%= receipt.item8['price'] %></span></p>
+                    <p><%= receipt.item9['name'] %><span> - $</span><span><%= receipt.item9['price'] %></span></p>
+                    <p><%= receipt.item10['name'] %><span> - $</span><span><%= receipt.item10['price'] %></span></p>
+                    <p><%= receipt.notes %></p>
+                </div>
+            </div>
+        <% }) %>
     </div>
-<% }) %>
+</div>
+
+<% include partials/footer.ejs %>
