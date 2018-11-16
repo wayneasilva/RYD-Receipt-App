@@ -6,12 +6,23 @@
         <% receipts.forEach((receipt) => { %>
             <div class="box">
                 <div class="container">
-                    <p>Receipt Number: <%= receipt.receiptNumber %></p>
-                    <p>First Name: <%= receipt.firstName %></p>
-                    <p>Last Name: <%= receipt.lastName %></p>
-                    <p>Phone Number: <%= receipt.phone %></p>
-                    <p>Date of Purchase: <%= receipt.saleDate %></p>
-                    <p>Item: <%= receipt.item1['name'] %><span> - $</span><span><%= receipt.item1['price'] %></span></p>
+                    <table class="table is-bordered">
+                        <tr>
+                            <th>Receipt #: </th>
+                            <th>First Name: </th>
+                            <th>Last Name: </th>
+                            <th>Phone Number: </th>
+                            <th>Date Of Purchase: </th>
+                        </tr>
+                        <tr>
+                            <td><span><%= receipt.receiptNumber %></span></td>
+                            <td><span><%= receipt.firstName %></span></td>
+                            <td><span><%= receipt.lastName %></span></td>
+                            <td><span><%= receipt.phone %></span></td>
+                            <td><span><%= receipt.saleDate %></span></td>
+                        </tr>
+                    </table>
+                    <!-- <p>Item: <%= receipt.item1['name'] %><span> - $</span><span><%= receipt.item1['price'] %></span></p>
                     <p>Item: <%= receipt.item2['name'] %><span> - $</span><span><%= receipt.item2['price'] %></span></p>
                     <p>Item: <%= receipt.item3['name'] %><span> - $</span><span><%= receipt.item3['price'] %></span></p>
                     <p>Item: <%= receipt.item4['name'] %><span> - $</span><span><%= receipt.item4['price'] %></span></p>
@@ -21,7 +32,7 @@
                     <p>Item: <%= receipt.item8['name'] %><span> - $</span><span><%= receipt.item8['price'] %></span></p>
                     <p>Item: <%= receipt.item9['name'] %><span> - $</span><span><%= receipt.item9['price'] %></span></p>
                     <p>Item: <%= receipt.item10['name'] %><span> - $</span><span><%= receipt.item10['price'] %></span></p>
-                    <p>Notes: <%= receipt.notes %></p>
+                    <p>Notes: <%= receipt.notes %></p> -->
                     
                     <a href="/receipts/<%= receipt._id %>" class="button">View Receipt</a>
                 </div>

@@ -18,6 +18,7 @@
         <p>Item: <%= receipt.item9['name'] %><span> - $</span><span><%= receipt.item9['price'] %></span></p>
         <p>Item: <%= receipt.item10['name'] %><span> - $</span><span><%= receipt.item10['price'] %></span></p>
         <p>Notes: <%= receipt.notes %></p>
+        <a class="button" href="/receipts/<%= receipt._id %>/edit">Edit</a>
     </div>
 </div>
 
