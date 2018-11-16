@@ -66,9 +66,13 @@ app.post("/receipts", (req, res) => {
     let saleData = req.body.receipt;
     let taxRate = 0.075;
      
+    let itemNames = [];
+    let finalNames = []
+
     let pricesPreTax = [];
     let pricesPreTaxConv = [];
     let taxedPrices = [];
+
     let subTotal = 0;
     
     //This line pushes our 10 item prices into an array.
@@ -85,7 +89,29 @@ app.post("/receipts", (req, res) => {
         saleData['item10']['price']
     );
 
+    //This line pushes all item name values into an array for later use.
+    itemNames.push(
+        saleData['item1']['name'], 
+        saleData['item2']['name'], 
+        saleData['item3']['name'], 
+        saleData['item4']['name'], 
+        saleData['item5']['name'], 
+        saleData['item6']['name'], 
+        saleData['item7']['name'], 
+        saleData['item8']['name'], 
+        saleData['item9']['name'], 
+        saleData['item10']['name']
+    );
 
+    //create a new array with only the names with a value other than ''
+    function removeEmptyNames(itemNames) {
+        itemNames.forEach((name) => {
+            if (name !== '') {
+                finalNames.push(name);
+            }
+        })
+        console.log(finalNames);
+    }
     
     //This function will convert our pricePreTax array values to float from string
     function convertToFloat(pricesPreTax) {
@@ -120,12 +146,34 @@ app.post("/receipts", (req, res) => {
         finalSaleReceipt['receiptNumber'] = saleData['receiptNumber'];
         finalSaleReceipt['firstName'] = saleData['firstName'];
         finalSaleReceipt['lastName'] = saleData['lastName'];
+        finalSaleReceipt['phone'] = saleData['phone'];
+        finalSaleReceipt['item1'] = {name: String, price: String, tax: String, total: String};
+        finalSaleReceipt['item2'] = {name: String, price: String, tax: String, total: String};
+        finalSaleReceipt['item3'] = {name: String, price: String, tax: String, total: String};
+        finalSaleReceipt['item4'] = {name: String, price: String, tax: String, total: String};
+        finalSaleReceipt['item5'] = {name: String, price: String, tax: String, total: String};
+        finalSaleReceipt['item6'] = {name: String, price: String, tax: String, total: String};
+        finalSaleReceipt['item7'] = {name: String, price: String, tax: String, total: String};
+        finalSaleReceipt['item8'] = {name: String, price: String, tax: String, total: String};
+        finalSaleReceipt['item9'] = {name: String, price: String, tax: String, total: String};
+        finalSaleReceipt['item10'] = {name: String, price: String, tax: String, total: String};
+        finalSaleReceipt['notes'] = saleData['notes'];
+
+        console.log(finalSaleReceipt);
+
+        // for (let i = 0; i < finalNames.length; i++) {
+        //     for (let prop in finalSaleReceipt) {
+        //         if (prop.hasOwnProperty(['name'] ))
+        //     }
+        // }
     }
 
     convertToFloat(pricesPreTax);
+    removeEmptyNames(itemNames);
     calculateSubtotal(pricesPreTaxConv);
     calculateItemPlusTax(pricesPreTaxConv);
-    console.log(finalSaleReceipt);
+    buildReceipt();
+    // console.log(finalSaleReceipt);
 
 
 
