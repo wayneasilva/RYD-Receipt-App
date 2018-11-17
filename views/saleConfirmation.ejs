@@ -1,0 +1,18 @@
+<% include partials/header %>
+
+<h1>saleConfirmation</h1>
+
+<% for (let prop in finalSaleReceipt) { %>
+    <% if (finalSaleReceipt[prop].hasOwnProperty('name') && finalSaleReceipt[prop]['name'] !== 'none') { %>
+        <div class="box">
+            <div class="container">
+                <p>Item Name: <%= finalSaleReceipt[prop]['name'] %></p>
+                <p>Item Price: <%= finalSaleReceipt[prop]['price'] %></p>
+                <p>Tax: <%= finalSaleReceipt[prop]['tax'] %></p>
+                <p>Total: <%= finalSaleReceipt[prop]['total'] %></p>
+            </div>
+        </div>
+    <% } %>
+<% } %>
+
+<% include partials/footer %>

@@ -30,16 +30,6 @@ const receiptSchema = new mongoose.Schema({
 
 const Receipt = mongoose.model("receipt", receiptSchema);
 
-// Receipt.create({
-//     receiptNumber: 1,
-//     firstName: "Wayne",
-//     lastName: "Silva",
-//     phone: "8675309",
-//     item1: {name: "Carb", price: 65},
-//     item2: {name: "Oil Change", price: 85},
-//     notes: "Test receipt for Wayne"
-// })
-
 //ROOT ROUTE
 app.get("/", (req, res) => {res.send("Receipt App Home Route");})
 
@@ -67,11 +57,13 @@ app.post("/receipts", (req, res) => {
     let taxRate = 0.075;
      
     let itemNames = [];
-    let finalNames = []
 
     let pricesPreTax = [];
     let pricesPreTaxConv = [];
-    let taxedPrices = [];
+
+    let finalNames = [];
+    let taxes = [];
+    let itemTotals = [];
 
     let subTotal = 0;
     
@@ -110,7 +102,7 @@ app.post("/receipts", (req, res) => {
                 finalNames.push(name);
             }
         })
-        console.log(finalNames);
+        // console.log(finalNames);
     }
     
     //This function will convert our pricePreTax array values to float from string
@@ -128,15 +120,17 @@ app.post("/receipts", (req, res) => {
         pricesPreTaxConv.forEach((price) => {
             subTotal += price;
         })
-        console.log(subTotal);
+        // console.log(subTotal);
     }
 
     //This function will return an array with each element being the item price + tax.
     function calculateItemPlusTax(pricesPreTaxConv) {
         pricesPreTaxConv.forEach((price) => {
             let tax = price * taxRate;
-            taxedPrices.push(price + tax);
-            console.log(taxedPrices);
+
+            taxes.push(tax);
+            itemTotals.push(price + tax);
+            // console.log(itemTotals);
         })
     }
 
@@ -147,25 +141,55 @@ app.post("/receipts", (req, res) => {
         finalSaleReceipt['firstName'] = saleData['firstName'];
         finalSaleReceipt['lastName'] = saleData['lastName'];
         finalSaleReceipt['phone'] = saleData['phone'];
-        finalSaleReceipt['item1'] = {name: String, price: String, tax: String, total: String};
-        finalSaleReceipt['item2'] = {name: String, price: String, tax: String, total: String};
-        finalSaleReceipt['item3'] = {name: String, price: String, tax: String, total: String};
-        finalSaleReceipt['item4'] = {name: String, price: String, tax: String, total: String};
-        finalSaleReceipt['item5'] = {name: String, price: String, tax: String, total: String};
-        finalSaleReceipt['item6'] = {name: String, price: String, tax: String, total: String};
-        finalSaleReceipt['item7'] = {name: String, price: String, tax: String, total: String};
-        finalSaleReceipt['item8'] = {name: String, price: String, tax: String, total: String};
-        finalSaleReceipt['item9'] = {name: String, price: String, tax: String, total: String};
-        finalSaleReceipt['item10'] = {name: String, price: String, tax: String, total: String};
+        finalSaleReceipt['item1'] = {name: 'none', price: 'none', tax: 'none', total: 'none'};
+        finalSaleReceipt['item2'] = {name: 'none', price: 'none', tax: 'none', total: 'none'};
+        finalSaleReceipt['item3'] = {name: 'none', price: 'none', tax: 'none', total: 'none'};
+        finalSaleReceipt['item4'] = {name: 'none', price: 'none', tax: 'none', total: 'none'};
+        finalSaleReceipt['item5'] = {name: 'none', price: 'none', tax: 'none', total: 'none'};
+        finalSaleReceipt['item6'] = {name: 'none', price: 'none', tax: 'none', total: 'none'};
+        finalSaleReceipt['item7'] = {name: 'none', price: 'none', tax: 'none', total: 'none'};
+        finalSaleReceipt['item8'] = {name: 'none', price: 'none', tax: 'none', total: 'none'};
+        finalSaleReceipt['item9'] = {name: 'none', price: 'none', tax: 'none', total: 'none'};
+        finalSaleReceipt['item10'] = {name: 'none', price: 'none', tax: 'none', total: 'none'};
         finalSaleReceipt['notes'] = saleData['notes'];
 
-        console.log(finalSaleReceipt);
+        //propArray will hold ourProperties for mutation
+        let propArray = [];
+        // let priceArray = [];
+        // let taxArray = [];
+        // let totalArray = [];
 
-        // for (let i = 0; i < finalNames.length; i++) {
-        //     for (let prop in finalSaleReceipt) {
-        //         if (prop.hasOwnProperty(['name'] ))
-        //     }
-        // }
+        //Iterate through finalSaleReceipt properties and push ['item1'] through ['item10'] to propArray
+        for (let prop in finalSaleReceipt) {
+            if (finalSaleReceipt[prop].hasOwnProperty('name') === true) {
+                propArray.push(finalSaleReceipt[prop]);
+            } 
+            else {
+                // write error catch later
+            }
+        }
+
+        //Push each item name into propArray
+        for (let i = 0; i < finalNames.length; i++) {
+            propArray[i]['name'] = finalNames[i];
+            propArray[i]['price'] = pricesPreTaxConv[i];
+            propArray[i]['tax'] = taxes[i];
+            propArray[i]['total'] = itemTotals[i];
+        }
+        
+        // console.log(propArray);
+        finalSaleReceipt['item1'] = propArray[0];
+        finalSaleReceipt['item2'] = propArray[1];
+        finalSaleReceipt['item3'] = propArray[2];
+        finalSaleReceipt['item4'] = propArray[3];
+        finalSaleReceipt['item5'] = propArray[4];
+        finalSaleReceipt['item6'] = propArray[5];
+        finalSaleReceipt['item7'] = propArray[6];
+        finalSaleReceipt['item8'] = propArray[7];
+        finalSaleReceipt['item9'] = propArray[8];
+        finalSaleReceipt['item10'] = propArray[9];
+        
+        res.render("saleConfirmation", {finalSaleReceipt: finalSaleReceipt});
     }
 
     convertToFloat(pricesPreTax);
@@ -174,9 +198,6 @@ app.post("/receipts", (req, res) => {
     calculateItemPlusTax(pricesPreTaxConv);
     buildReceipt();
     // console.log(finalSaleReceipt);
-
-
-
 
     // console.log(req);
     // console.log("########################")
