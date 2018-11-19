@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const fetch = require("node-fetch");
 
 mongoose.connect("mongodb://localhost:27017/RYD_DB", { useNewUrlParser: true, useFindAndModify: false });
 app.set("view engine", "ejs");
@@ -10,21 +11,21 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 //MONGOOSE MODEL CONFIGURATION
 const receiptSchema = new mongoose.Schema({
-    receiptNumber: Number,
+    receiptNumber: String,
     firstName: String,
     lastName: String,
     phone: String,
     saleDate:{type: Date, default: Date.now},
-    item1: {name: String, price: Number, tax: Number, Total: Number},
-    item2: {name: String, price: Number, tax: Number, Total: Number},
-    item3: {name: String, price: Number, tax: Number, Total: Number},
-    item4: {name: String, price: Number, tax: Number, Total: Number},
-    item5: {name: String, price: Number, tax: Number, Total: Number},
-    item6: {name: String, price: Number, tax: Number, Total: Number},
-    item7: {name: String, price: Number, tax: Number, Total: Number},
-    item8: {name: String, price: Number, tax: Number, Total: Number},
-    item9: {name: String, price: Number, tax: Number, Total: Number},
-    item10: {name: String, price: Number, tax: Number, Total: Number},
+    item1: {name: String, price: String, tax: String, total: String},
+    item2: {name: String, price: String, tax: String, total: String},
+    item3: {name: String, price: String, tax: String, total: String},
+    item4: {name: String, price: String, tax: String, total: String},
+    item5: {name: String, price: String, tax: String, total: String},
+    item6: {name: String, price: String, tax: String, total: String},
+    item7: {name: String, price: String, tax: String, total: String},
+    item8: {name: String, price: String, tax: String, total: String},
+    item9: {name: String, price: String, tax: String, total: String},
+    item10: {name: String, price: String, tax: String, total: String},
     notes: String
 });
 
@@ -50,8 +51,8 @@ app.get("/receipts", (req, res) => {
 app.get("/receipts/new", (req, res) => {res.render("new");})
 //must calculate totals and include tax etc and submit to server**
 
-// //CREATE ROUTE
-app.post("/receipts", (req, res) => {
+//CONFIRM SALE ROUTE
+app.post("/receipts/confirm", (req,res) => {
     // req.body.receipt.body = req.sanitize(req.receipt.blog.body);
     let saleData = req.body.receipt;
     let taxRate = 0.075;
@@ -66,6 +67,8 @@ app.post("/receipts", (req, res) => {
     let itemTotals = [];
 
     let subTotal = 0;
+    let taxTotal = 0;
+    let total = 0;
     
     //This line pushes our 10 item prices into an array.
     pricesPreTax.push(
@@ -134,6 +137,19 @@ app.post("/receipts", (req, res) => {
         })
     }
 
+    function calculateTaxTotal(taxes) {
+        taxes.forEach((itemTax) => {
+            taxTotal += itemTax;
+        })
+    }
+
+    function calculateTotal(itemTotals) {
+        itemTotals.forEach((itemTotal) => {
+            total += itemTotal;
+        })
+        console.log(total);
+    }
+
     function buildReceipt() {
         let finalSaleReceipt = {};
 
@@ -189,30 +205,36 @@ app.post("/receipts", (req, res) => {
         finalSaleReceipt['item9'] = propArray[8];
         finalSaleReceipt['item10'] = propArray[9];
         
-        res.render("saleConfirmation", {finalSaleReceipt: finalSaleReceipt});
+        res.render("saleConfirmation", {
+                                        finalSaleReceipt: finalSaleReceipt, 
+                                        subTotal: subTotal, 
+                                        total: total,
+                                        taxTotal: taxTotal,
+                                        fetch: fetch
+                                       });
     }
 
     convertToFloat(pricesPreTax);
     removeEmptyNames(itemNames);
     calculateSubtotal(pricesPreTaxConv);
     calculateItemPlusTax(pricesPreTaxConv);
+    calculateTaxTotal(taxes);
+    calculateTotal(itemTotals);
     buildReceipt();
-    // console.log(finalSaleReceipt);
+})
 
-    // console.log(req);
-    // console.log("########################")
-    // console.log(req.body);
-    // console.log("########################")
+// //CREATE ROUTE
+app.post("/receipts", (req, res) => {
     // console.log(req.body.receipt);
     // console.log("########################")
-    // Receipt.create(req.body.receipt, (err, newReceipt) => {
-    //     if (err) {
-    //         res.render("new");
-    //     }
-    //     else {
-    //         res.redirect("/receipts");
-    //     }
-    // })
+    Receipt.create(req.body.receipt, (err, newReceipt) => {
+        if (err) {
+            // res.render("new");
+        }
+        else {
+            res.redirect("/receipts");
+        }
+    })
 })
 
 //SHOW ROUTE

@@ -1,18 +1,331 @@
 <% include partials/header %>
 
-<h1>saleConfirmation</h1>
+<div class="box">
+    <div class="container">
+        <h1 class="title">Sale Confirmation</h1>
+    </div>
+</div>
 
-<% for (let prop in finalSaleReceipt) { %>
-    <% if (finalSaleReceipt[prop].hasOwnProperty('name') && finalSaleReceipt[prop]['name'] !== 'none') { %>
+<div class="box">
+    <div class="container">
+        <% for (let prop in finalSaleReceipt) { %>
+            <% if (finalSaleReceipt[prop].hasOwnProperty('name') && finalSaleReceipt[prop]['name'] !== 'none') { %>
+                <div class="box">
+                    <div class="container">
+                        <p>Item Name: <%= finalSaleReceipt[prop]['name'] %></p>
+                        <p>Item Price: <%= finalSaleReceipt[prop]['price'] %></p>
+                        <p>Tax: <%= finalSaleReceipt[prop]['tax'] %></p>
+                        <p>Total: <%= finalSaleReceipt[prop]['total'] %></p>
+                    </div>
+                </div>
+            <% } %>
+        <% } %>
         <div class="box">
             <div class="container">
-                <p>Item Name: <%= finalSaleReceipt[prop]['name'] %></p>
-                <p>Item Price: <%= finalSaleReceipt[prop]['price'] %></p>
-                <p>Tax: <%= finalSaleReceipt[prop]['tax'] %></p>
-                <p>Total: <%= finalSaleReceipt[prop]['total'] %></p>
+                <p>Subtotal: $<%= subTotal %></p>
+                <p>Tax Total: $<%= taxTotal %></p>
+                <p>Total: $<%= total %></p>
             </div>
         </div>
-    <% } %>
-<% } %>
+        <form class="box container" action="/receipts" method="POST">
+            <div class="field">
+                <!-- <label class="label">Receipt Number</label> -->
+                <div class="control">
+                    <input class="input" name="receipt[receiptNumber]" type="hidden" value="<%= finalSaleReceipt.receiptNumber %>">
+                </div>
+            </div>
+            <div class="field">
+                <!-- <label class="label">First Name:</label> -->
+                <div class="control">
+                    <input class="input" name="receipt[firstName]" type="hidden" value="<%= finalSaleReceipt.firstName %>">
+                </div>
+            </div>
+            <div class="field">
+                <!-- <label class="label">Last Name:</label> -->
+                <div class="control">
+                    <input class="input" type="hidden" name="receipt[lastName]" value="<%= finalSaleReceipt.lastName %>">
+                </div>
+            </div>
+            <div class="field">
+                <!-- <label class="label">Phone Number:</label> -->
+                <div class="control">
+                    <input class="input" type="hidden" name="receipt[phone]" value="<%= finalSaleReceipt.phone %>">
+                </div>
+            </div>
+            <div class="item">
+                <div class="field">
+                    <!-- <label class="label">Item2 Name:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item1][name]" value="<%= finalSaleReceipt.item1.name %>">
+                    </div>
+                </div>
+                <div class="field">
+                    <!-- <label class="label">Item2 Price:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item1][price]" value="<%= finalSaleReceipt.item1.price %>">
+                    </div>
+                </div>
+                <div class="field">
+                    <!-- <label class="label">Item2 Tax:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item1][tax]" value="<%= finalSaleReceipt.item1.tax %>">
+                    </div>
+                </div>
+                <div class="field">
+                    <!-- <label class="label">Item2 Total:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item1][total]" value="<%= finalSaleReceipt.item1.total %>">
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="field">
+                    <!-- <label class="label">Item2 Name:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item2][name]" value="<%= finalSaleReceipt.item2.name %>">
+                    </div>
+                </div>
+                <div class="field">
+                    <!-- <label class="label">Item2 Price:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item2][price]" value="<%= finalSaleReceipt.item2.price %>">
+                    </div>
+                </div>
+                <div class="field">
+                    <!-- <label class="label">Item2 Tax:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item2][tax]" value="<%= finalSaleReceipt.item2.tax %>">
+                    </div>
+                </div>
+                <div class="field">
+                    <!-- <label class="label">Item2 Total:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item2][total]" value="<%= finalSaleReceipt.item2.total %>">
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="field">
+                    <!-- <label class="label">Item3 Name:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item3][name]" value="<%= finalSaleReceipt.item3.name %>">
+                    </div>
+                </div>
+                <div class="field">
+                    <!-- <label class="label">Item3 Price:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item3][price]" value="<%= finalSaleReceipt.item3.price %>">
+                    </div>
+                </div>
+                <div class="field">
+                    <!-- <label class="label">Item3 Tax:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item3][tax]" value="<%= finalSaleReceipt.item3.tax %>">
+                    </div>
+                </div>
+                <div class="field">
+                    <!-- <label class="label">Item3 Total:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item3][total]" value="<%= finalSaleReceipt.item3.total %>">
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="field">
+                    <!-- <label class="label">Item4 Name:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item4][name]" value="<%= finalSaleReceipt.item4.name %>">
+                    </div>
+                </div>
+                <div class="field">
+                    <!-- <label class="label">Item4 Price:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item4][price]" value="<%= finalSaleReceipt.item4.price %>">
+                    </div>
+                </div>
+                <div class="field">
+                    <!-- <label class="label">Item4 Tax:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item4][tax]" value="<%= finalSaleReceipt.item4.tax %>">
+                    </div>
+                </div>
+                <div class="field">
+                    <!-- <label class="label">Item4 Total:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item4][total]" value="<%= finalSaleReceipt.item4.total %>">
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="field">
+                    <!-- <label class="label">Item5 Name:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item5][name]" value="<%= finalSaleReceipt.item5.name %>">
+                    </div>
+                </div>
+                <div class="field">
+                    <!-- <label class="label">Item5 Price:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item5][price]" value="<%= finalSaleReceipt.item5.price %>">
+                    </div>
+                </div>
+                <div class="field">
+                    <!-- <label class="label">Item5 Tax:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item5][tax]" value="<%= finalSaleReceipt.item5.tax %>">
+                    </div>
+                </div>
+                <div class="field">
+                    <!-- <label class="label">Item5 Total:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item5][total]" value="<%= finalSaleReceipt.item5.total %>">
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="field">
+                    <!-- <label class="label">Item6 Name:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item6][name]" value="<%= finalSaleReceipt.item6.name %>">
+                    </div>
+                </div>
+                <div class="field">
+                    <!-- <label class="label">Item6 Price:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item6][price]" value="<%= finalSaleReceipt.item6.price %>">
+                    </div>
+                </div>
+                <div class="field">
+                    <!-- <label class="label">Item6 Tax:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item6][tax]" value="<%= finalSaleReceipt.item6.tax %>">
+                    </div>
+                </div>
+                <div class="field">
+                    <!-- <label class="label">Item6 Total:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item6][total]" value="<%= finalSaleReceipt.item6.total %>">
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="field">
+                    <!-- <label class="label">Item7 Name:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item7][name]" value="<%= finalSaleReceipt.item7.name %>">
+                    </div>
+                </div>
+                <div class="field">
+                    <!-- <label class="label">Item7 Price:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item7][price]" value="<%= finalSaleReceipt.item7.price %>">
+                    </div>
+                </div>
+                <div class="field">
+                    <!-- <label class="label">Item7 Tax:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item7][tax]" value="<%= finalSaleReceipt.item7.tax %>">
+                    </div>
+                </div>
+                <div class="field">
+                    <!-- <label class="label">Item7 Total:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item7][total]" value="<%= finalSaleReceipt.item7.total %>">
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="field">
+                    <!-- <label class="label">Item8 Name:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item8][name]" value="<%= finalSaleReceipt.item8.name %>">
+                    </div>
+                </div>
+                <div class="field">
+                    <!-- <label class="label">Item8 Price:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item8][price]" value="<%= finalSaleReceipt.item8.price %>">
+                    </div>
+                </div>
+                <div class="field">
+                    <!-- <label class="label">Item8 Tax:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item8][tax]" value="<%= finalSaleReceipt.item8.tax %>">
+                    </div>
+                </div>
+                <div class="field">
+                    <!-- <label class="label">Item8 Total:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item8][total]" value="<%= finalSaleReceipt.item8.total %>">
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="field">
+                    <!-- <label class="label">Item9 Name:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item9][name]" value="<%= finalSaleReceipt.item9.name %>">
+                    </div>
+                </div>
+                <div class="field">
+                    <!-- <label class="label">Item9 Price:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item9][price]" value="<%= finalSaleReceipt.item9.price %>">
+                    </div>
+                </div>
+                <div class="field">
+                    <!-- <label class="label">Item9 Tax:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item9][tax]" value="<%= finalSaleReceipt.item9.tax %>">
+                    </div>
+                </div>
+                <div class="field">
+                    <!-- <label class="label">Item9 Total:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item9][total]" value="<%= finalSaleReceipt.item9.total %>">
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="field">
+                    <!-- <label class="label">Item10 Name:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item10][name]" value="<%= finalSaleReceipt.item10.name %>">
+                    </div>
+                </div>
+                <div class="field">
+                    <!-- <label class="label">Item10 Price:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item10][price]" value="<%= finalSaleReceipt.item10.price %>">
+                    </div>
+                </div>
+                <div class="field">
+                    <!-- <label class="label">Item10 Tax:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item10][tax]" value="<%= finalSaleReceipt.item10.tax %>">
+                    </div>
+                </div>
+                <div class="field">
+                    <!-- <label class="label">Item10 Total:</label> -->
+                    <div class="control">
+                        <input class="input" type="hidden" name="receipt[item10][total]" value="<%= finalSaleReceipt.item10.total %>">
+                    </div>
+                </div>
+            </div>
+            <div class="field">
+                <!-- <label class="label">Notes:</label> -->
+                <div class="control">
+                    <input class="input" type="hidden" name="receipt[notes]" value="<%= finalSaleReceipt.notes %>"></input>
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <input class="button is-success" type="submit">
+                </div>
+            </div>
+        </form>
+        <span>Please review this transaction and press the "confirm" button to confirm or "cancel" to go back.</span><a class="button is-danger">Cancel</a>
+    </div>
+</div>
 
 <% include partials/footer %>
