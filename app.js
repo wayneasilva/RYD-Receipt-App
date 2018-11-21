@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const fetch = require("node-fetch");
 
 mongoose.connect("mongodb://localhost:27017/RYD_DB", { useNewUrlParser: true, useFindAndModify: false });
 app.set("view engine", "ejs");
